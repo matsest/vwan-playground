@@ -26,7 +26,7 @@ New-AzDeployment -Name vwanplayground -Location <location> -TemplateFile .\main.
 az deployment sub create -n vwanplayground --location <location> --template-file main.json -parameters @main.parameters.json
 ```
 
-## Topology
+## Topology 1 - Contoso vWAN
 
 The Azure Virtual WAN Playground deploys the following topology:
 

@@ -1,0 +1,72 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "location": {
+      "type": "string",
+      "defaultValue": "[resourceGroup().location]"
+    },
+    "namePrefix": {
+      "type": "string",
+      "defaultValue": "fabrikam"
+    },
+    "sku": {
+      "type": "string",
+      "defaultValue": "Standard",
+      "allowedValues": [
+        "Standard",
+        "Premium"
+      ]
+    }
+  },
+  "functions": [],
+  "variables": {
+    "basePolicyName": "[toLower(format('{0}-organizational-{1}-base-policy', parameters('namePrefix'), parameters('sku')))]",
+    "childPolicyName": "[toLower(format('{0}-{1}-{2}-fw-policy', parameters('namePrefix'), parameters('location'), parameters('sku')))]",
+    "identityConfig": {
+      "type": "UserAssigned",
+      "userAssignedIdentities": {
+        "[resourceId('Microsoft.ManagedIdentity/userAssignedIdentities', 'fw-identity')]": {}
+      }
+    }
+  },
+  "resources": [
+    {
+      "condition": "[equals(parameters('sku'), 'Premium')]",
+      "type": "Microsoft.ManagedIdentity/userAssignedIdentities",
+      "apiVersion": "2018-11-30",
+      "name": "fw-identity",
+      "location": "[parameters('location')]"
+    },
+    {
+      "type": "Microsoft.Network/firewallPolicies",
+      "apiVersion": "2020-07-01",
+      "name": "[variables('basePolicyName')]",
+      "location": "[parameters('location')]",
+      "properties": {
+        "sku": {
+          "tier": "[parameters('sku')]"
+        }
+      }
+    },
+    {
+      "type": "Microsoft.Network/firewallPolicies",
+      "apiVersion": "2020-07-01",
+      "name": "[variables('childPolicyName')]",
+      "location": "[parameters('location')]",
+      "properties": {
+        "sku": {
+          "tier": "[parameters('sku')]"
+        },
+        "basePolicy": {
+          "id": "[resourceId('Microsoft.Network/firewallPolicies', variables('basePolicyName'))]"
+        }
+      },
+      "identity": "[if(equals(parameters('sku'), 'Premium'), variables('identityConfig'), json('null'))]",
+      "dependsOn": [
+        "[resourceId('Microsoft.Network/firewallPolicies', variables('basePolicyName'))]",
+        "[resourceId('Microsoft.ManagedIdentity/userAssignedIdentities', 'fw-identity')]"
+      ]
+    }
+  ]
+}
