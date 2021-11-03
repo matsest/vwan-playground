@@ -250,7 +250,7 @@ module lzVNetConnection 'modules/hubVirtualNetworkConnections.bicep' = [for (reg
     hubName: '${vwan.outputs.name}-${region.location}-vhub'
     associatedRouteTableId: lzRouteTable[i].outputs.resourceId
     propagatedRouteTableIds: region.deployFw ? [
-      builtInRouteTables[i].outputs.noneRouteTableResourceId
+      builtInRouteTables[i].outputs.noneRouteTableResourceId // do we want lz-lz traffic to be routed via firewall?
     ] : [
       builtInRouteTables[i].outputs.defaultRouteTableResourceId
     ]
