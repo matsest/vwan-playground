@@ -7,6 +7,9 @@ param hubvpngwname string
 @description('Virtual WAN ID')
 param hubid string
 
+@description('1 scaleunit corresponds to 500 Mbps')
+param scaleUnits int = 1
+
 resource hubvpngw 'Microsoft.Network/vpnGateways@2021-03-01' = {
     name: hubvpngwname
     location: location
@@ -17,6 +20,7 @@ resource hubvpngw 'Microsoft.Network/vpnGateways@2021-03-01' = {
         bgpSettings: {
             asn: 65515
         }
+        vpnGatewayScaleUnit: scaleUnits
     }
 }
 

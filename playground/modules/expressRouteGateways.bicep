@@ -1,4 +1,5 @@
 param gwName string
+@description('1 scaleunits corresponds to 2 Gbps')
 param scaleUnits int = 1
 param virtualHubId string
 param tags object = {}
@@ -15,6 +16,7 @@ resource expressRouteGw 'Microsoft.Network/expressRouteGateways@2021-03-01' = {
     autoScaleConfiguration: {
       bounds: {
         min: scaleUnits
+        max: scaleUnits
       }
     }
   }
