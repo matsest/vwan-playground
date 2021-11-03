@@ -29,11 +29,15 @@ resource s2sconnection 'Microsoft.Network/connections@2021-03-01' = [for (hub, i
     connectionProtocol: 'IKEv2'
     virtualNetworkGateway1: {
       id: vpnGwId
+      properties: {
+        gatewayType: 'Vpn'
+      }
     }
     enableBgp: true
     sharedKey: psk
     localNetworkGateway2: {
       id: lgw[i].id
+      properties: lgw[i].properties
     }
   }
 }]
