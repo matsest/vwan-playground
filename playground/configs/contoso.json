@@ -17,7 +17,7 @@
                     "10.0.4.0/22"
                 ]
             },
-            "landingZones": {
+            "landingZone": {
                 "name": "weu-lz1",
                 "addressPrefix": "10.0.10.0/24"
             }
@@ -29,7 +29,7 @@
             "deployVpnGw": false,
             "deployErGw": false,
             "deployP2SGw": false,
-            "landingZones": {
+            "landingZone": {
                 "name": "neu-lz1",
                 "addressPrefix": "10.10.10.0/24"
             }
@@ -41,7 +41,7 @@
             "deployVpnGw": false,
             "deployErGw": true,
             "deployP2SGw": false,
-            "landingZones": {
+            "landingZone": {
                 "name": "eus-lz1",
                 "addressPrefix": "10.20.10.0/24"
             }

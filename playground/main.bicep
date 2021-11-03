@@ -6,7 +6,7 @@ param vmAdminPassword string
 @secure()
 param psk string
 
-// Load VWAN Playground Config file. 
+// Load VWAN Playground Config file.
 var vwanConfig = json(loadTextContent('./configs/contoso.json'))
 var location = vwanConfig.defaultLocation
 
@@ -178,18 +178,18 @@ module p2svpnGateways 'modules/p2svpnGateways.bicep' = [for (region, i) in vwanC
 // Landing Zones
 // Deploy "landing zone" resource groups
 resource landingZoneRg 'Microsoft.Resources/resourceGroups@2021-04-01' = [for (region, i) in vwanConfig.regions: {
-  name: '${namePrefix}-${region.landingZones.name}-rg'
+  name: '${namePrefix}-${region.landingZone.name}-rg'
   location: region.location
 }]
 
 // Deploy "landing zone" VNets
 @batchSize(1)
 module landingZoneVnet 'modules/virtualNetworks.bicep' = [for (region, i) in vwanConfig.regions: {
-  name: '${region.landingZones.name}-vnet-deploy'
+  name: '${region.landingZone.name}-vnet-deploy'
   scope: landingZoneRg[i]
   params: {
-    addressPrefix: region.landingZones.addressPrefix
-    vnetName: '${region.landingZones.name}-vnet'
+    addressPrefix: region.landingZone.addressPrefix
+    vnetName: '${region.landingZone.name}-vnet'
     privateDnsZoneName: privateDnsZone.outputs.resourceName
     sharedServicesRg: sharedg.name
     peerId: bastionVnet.outputs.resourceId
@@ -199,10 +199,10 @@ module landingZoneVnet 'modules/virtualNetworks.bicep' = [for (region, i) in vwa
 
 // Deploy "landing zone" servers
 module landingZoneServer 'modules/windowsVM.bicep' = [for (region, i) in vwanConfig.regions: {
-  name: '${region.landingZones.name}-vm-deploy'
+  name: '${region.landingZone.name}-vm-deploy'
   scope: landingZoneRg[i]
   params: {
-    vmName: '${region.landingZones.name}-vm'
+    vmName: '${region.landingZone.name}-vm'
     adminPassword: vmAdminPassword
     subnetId: landingZoneVnet[i].outputs.serverSubnetId
   }
@@ -245,7 +245,7 @@ module builtInRouteTables 'modules/defaultRouteTable.bicep' = [for (region, i) i
 @batchSize(1)
 module lzVNetConnection 'modules/hubVirtualNetworkConnections.bicep' = [for (region, i) in vwanConfig.regions: {
   scope: vwanRg
-  name: '${region.landingZones.name}-vnet-conn-deploy'
+  name: '${region.landingZone.name}-vnet-conn-deploy'
   params: {
     hubName: '${vwan.outputs.name}-${region.location}-vhub'
     associatedRouteTableId: region.deployFw ? lzRouteTable[i].outputs.resourceId : builtInRouteTables[i].outputs.defaultRouteTableResourceId
@@ -255,7 +255,7 @@ module lzVNetConnection 'modules/hubVirtualNetworkConnections.bicep' = [for (reg
       builtInRouteTables[i].outputs.defaultRouteTableResourceId
     ]
     vnetId: landingZoneVnet[i].outputs.resourceId
-    connectionName: 'peeredTo-${region.landingZones.name}-vnet'
+    connectionName: 'peeredTo-${region.landingZone.name}-vnet'
   }
 }]
 
