@@ -8,7 +8,7 @@ param location string = resourceGroup().location
 
 var adresses = [for address in publicIPAddresses: {
   address: address
-}] 
+}]
 
 resource firewall 'Microsoft.Network/azureFirewalls@2021-02-01' = {
   name: name
@@ -34,9 +34,9 @@ resource firewall 'Microsoft.Network/azureFirewalls@2021-02-01' = {
   }
 }
 
-resource firewalldiag 'Microsoft.Network/azureFirewalls/providers/diagnosticSettings@2017-05-01-preview' = {
-  name: '${firewall.name}/Microsoft.Insights/diagnostics'
-  location: location
+resource fwDiag 'Microsoft.Insights/diagnosticSettings@2021-05-01-preview' = {
+  scope: firewall
+  name: 'diagnostics'
   properties: {
     workspaceId: workspaceId
     logs: [
