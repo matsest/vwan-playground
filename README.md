@@ -46,7 +46,15 @@ New-AzSubscriptionDeployment -Name vwan-playground -Location westeurope -Templat
 az deployment sub create --name vwan-playground --location westeurope --template-file .\playground\main.bicep
 ```
 
-> NOTE: The deployment is complex and consist of multiple resources that takes a long time to provision. Expected deployment time is over 1 hour.
+> :stopwatch: **NOTE**: The deployment is complex and consist of multiple resources that takes a long time to provision. Expected initial deployment time is over 1 hour.
+
+> :money_with_wings: **NOTE**: This deployment is *not* free and will increase your Azure cost. The monthly cost will be approximately 4,000 USD (no guarantees given!) given the default configuration.
+>
+> See the section below for a guide on how to delete all deployed resources.
+
+### Delete the deployment
+
+To delete all resources, see the description [here](./cleanup/README.md).
 
 ## Topology <<**Needs an update**>>
 
