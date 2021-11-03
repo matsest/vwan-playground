@@ -219,7 +219,7 @@ module lzRouteTable 'modules/hubRouteTables.bicep' = [for (region, i) in vwanCon
     ]
     routes: region.deployFw ? [
       {
-        name: 'nextHopFW'
+        name: 'public_traffic'
         destinationType: 'CIDR'
         destinations: [
           '0.0.0.0/0'
