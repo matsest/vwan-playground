@@ -46,6 +46,8 @@ New-AzSubscriptionDeployment -Name vwan-playground -Location westeurope -Templat
 az deployment sub create --name vwan-playground --location westeurope --template-file .\playground\main.bicep
 ```
 
+You can also use the attached deploy scripts ([PowerShell](./playground/deploy.ps1), [Bash](./playground/deploy.sh)) to run these commands.
+
 > :stopwatch: **NOTE**: The deployment is complex and consist of multiple resources that takes a long time to provision. Expected initial deployment time is over 1 hour.
 
 > :money_with_wings: **NOTE**: This deployment is *not* free and will increase your Azure cost. The monthly cost will be approximately 4,000 USD (no guarantees given!) given the default configuration.
