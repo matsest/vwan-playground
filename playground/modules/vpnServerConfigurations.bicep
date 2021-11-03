@@ -13,7 +13,7 @@ var aadAuthenticationParameters = {
   aadIssuer: 'https://sts.windows.net/${tenantId}/'
 }
 
-resource vpnServerConfigurations 'Microsoft.Network/vpnServerConfigurations@2020-11-01' = {
+resource vpnServerConfigurations 'Microsoft.Network/vpnServerConfigurations@2021-03-01' = {
   name: vpnConfigName
   location: location
   properties: {

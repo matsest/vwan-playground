@@ -15,7 +15,7 @@ var serverPrefix = '${split(addressPrefix, '.')[0]}.${split(addressPrefix, '.')[
 var gatewayPrefix = '${split(addressPrefix, '.')[0]}.${split(addressPrefix, '.')[1]}.${split(addressPrefix, '.')[2]}.64/26'
 var bastionPrefix = '${split(addressPrefix, '.')[0]}.${split(addressPrefix, '.')[1]}.${split(addressPrefix, '.')[2]}.128/26'
 
-resource nsg 'Microsoft.Network/networkSecurityGroups@2021-02-01' = {
+resource nsg 'Microsoft.Network/networkSecurityGroups@2021-03-01' = {
   name: '${vnetName}-snet-servers-nsg'
   location: location
 }
@@ -50,7 +50,7 @@ var bastionSubnet = [
   }
 ]
 
-resource vnet 'Microsoft.Network/virtualNetworks@2020-08-01' = {
+resource vnet 'Microsoft.Network/virtualNetworks@2021-03-01' = {
   name: vnetName
   location: location
   tags: tags

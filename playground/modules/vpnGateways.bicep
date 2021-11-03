@@ -7,7 +7,7 @@ param hubvpngwname string
 @description('Virtual WAN ID')
 param hubid string
 
-resource hubvpngw 'Microsoft.Network/vpnGateways@2020-06-01' = {
+resource hubvpngw 'Microsoft.Network/vpnGateways@2021-03-01' = {
     name: hubvpngwname
     location: location
     properties: {

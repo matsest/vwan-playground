@@ -6,7 +6,7 @@ param hubs array
 param psk string
 param location string = resourceGroup().location
 
-resource lgw 'Microsoft.Network/localNetworkGateways@2020-06-01' = [for hub in hubs: if (hub.vpnGw != null) {
+resource lgw 'Microsoft.Network/localNetworkGateways@2021-03-01' = [for hub in hubs: if (hub.vpnGw != null) {
   name: '${site.location}-${hub.hubName}'
   location: location
   properties: {
@@ -21,7 +21,7 @@ resource lgw 'Microsoft.Network/localNetworkGateways@2020-06-01' = [for hub in h
   }
 }]
 
-resource s2sconnection 'Microsoft.Network/connections@2021-02-01' = [for (hub, i) in hubs: if (hub.vpnGw != null) {
+resource s2sconnection 'Microsoft.Network/connections@2021-03-01' = [for (hub, i) in hubs: if (hub.vpnGw != null) {
   name: '${site.location}-to-${hub.hubName}-con'
   location: location
   properties: {

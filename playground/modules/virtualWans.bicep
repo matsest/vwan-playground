@@ -9,7 +9,7 @@ param allowBranchToBranchTraffic bool = true
 param location string = resourceGroup().location
 
 //Virtaul WAN Resource
-resource vwan 'Microsoft.Network/virtualWans@2020-11-01' = {
+resource vwan 'Microsoft.Network/virtualWans@2021-03-01' = {
   name: name
   location: location
   properties: {

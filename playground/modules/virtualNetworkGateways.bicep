@@ -2,20 +2,20 @@ param location string = resourceGroup().location
 param vpnGwName string
 param subnetId string
 
-resource publicIp 'Microsoft.Network/publicIPAddresses@2020-06-01' = {
+resource publicIp 'Microsoft.Network/publicIPAddresses@2021-03-01' = {
   name: '${vpnGwName}-pip'
   location: location
   sku: {
     name: 'Standard'
   }
   properties: {
-    publicIPAllocationMethod: 'Static'    
+    publicIPAllocationMethod: 'Static'
   }
 }
 
-resource vpnGw 'Microsoft.Network/virtualNetworkGateways@2020-06-01' = {
+resource vpnGw 'Microsoft.Network/virtualNetworkGateways@2021-03-01' = {
   name: vpnGwName
-  location: location    
+  location: location
   properties: {
       gatewayType: 'Vpn'
       ipConfigurations: [

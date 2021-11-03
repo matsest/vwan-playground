@@ -10,7 +10,7 @@ var adresses = [for address in publicIPAddresses: {
   address: address
 }]
 
-resource firewall 'Microsoft.Network/azureFirewalls@2021-02-01' = {
+resource firewall 'Microsoft.Network/azureFirewalls@2021-03-01' = {
   name: name
   location: location
   properties: {

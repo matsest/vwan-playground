@@ -18,7 +18,7 @@ param allowBranchToBranchTraffic bool = true
 param tags object = {}
 param location string = resourceGroup().location
 
-resource hub 'Microsoft.Network/virtualHubs@2020-11-01' = {
+resource hub 'Microsoft.Network/virtualHubs@2021-03-01' = {
   name: name
   location: location
   tags: tags

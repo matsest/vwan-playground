@@ -9,7 +9,7 @@ param vpnGatewayScaleUnit int = 1
 param customDnsServers array = []
 param isRoutingPreferenceInternet bool = false
 
-resource p2sVpnGw 'Microsoft.Network/p2svpnGateways@2020-11-01' = {
+resource p2sVpnGw 'Microsoft.Network/p2svpnGateways@2021-03-01' = {
   name: p2sVpnGwName
   location: location
   properties: {
@@ -23,7 +23,7 @@ resource p2sVpnGw 'Microsoft.Network/p2svpnGateways@2020-11-01' = {
       {
         name: 'P2SConnectionConfigDefault'
         properties: {
-          routingConfiguration: {            
+          routingConfiguration: {
             vnetRoutes: {
               staticRoutes: staticRoutes
             }
