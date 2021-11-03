@@ -248,7 +248,7 @@ module lzVNetConnection 'modules/hubVirtualNetworkConnections.bicep' = [for (reg
   name: '${region.landingZone.name}-vnet-conn-deploy'
   params: {
     hubName: '${vwan.outputs.name}-${region.location}-vhub'
-    associatedRouteTableId: region.deployFw ? lzRouteTable[i].outputs.resourceId : builtInRouteTables[i].outputs.defaultRouteTableResourceId
+    associatedRouteTableId: lzRouteTable[i].outputs.resourceId
     propagatedRouteTableIds: region.deployFw ? [
       builtInRouteTables[i].outputs.noneRouteTableResourceId
     ] : [
