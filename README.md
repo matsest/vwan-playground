@@ -46,6 +46,8 @@ New-AzSubscriptionDeployment -Name vwan-playground -Location westeurope -Templat
 az deployment sub create --name vwan-playground --location westeurope --template-file .\playground\main.bicep
 ```
 
+Enter the required parameter values to begin the deploy.
+
 You can also use the attached deploy scripts ([PowerShell](./playground/deploy.ps1), [Bash](./playground/deploy.sh)) to run these commands.
 
 > :stopwatch: **NOTE**: The deployment is complex and consist of multiple resources that takes a long time to provision. Expected initial deployment time is over 1 hour.

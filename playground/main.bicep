@@ -1,8 +1,10 @@
 targetScope = 'subscription'
 
+@description('A password for the VMs that must have more than 12 characters and must container lower characters, upper characters, digits and special characters.')
 @secure()
 param vmAdminPassword string
 
+@description('Pre-shared key (PSK) for the VPN Gateways. Must be printable ASCII characters between 1 and 128 characters.')
 @secure()
 param psk string
 
