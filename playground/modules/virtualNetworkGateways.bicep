@@ -7,7 +7,13 @@ resource publicIp 'Microsoft.Network/publicIPAddresses@2021-03-01' = {
   location: location
   sku: {
     name: 'Standard'
+    tier: 'Regional'
   }
+  zones: [
+    '1'
+    '2'
+    '3'
+  ]
   properties: {
     publicIPAllocationMethod: 'Static'
   }
