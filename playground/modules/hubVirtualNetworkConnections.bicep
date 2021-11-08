@@ -28,6 +28,7 @@ resource connection 'Microsoft.Network/virtualHubs/hubVirtualNetworkConnections@
       }
       propagatedRouteTables: {
         ids: propagatedRouteTableIds == [] ? json('null') : routeTableIds
+        // labels // do we want the vnet connections to propagate to others?
       }
     }
   }

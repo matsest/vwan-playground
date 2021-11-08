@@ -64,6 +64,12 @@ To delete all resources, see the description [here](./cleanup/README.md).
 
 The Azure Virtual WAN Playground deploys the following topology:
 
+> TODO: Describe routing scenario:
+>
+> - Branch-to-branch: (default)
+> - VNET to VNET
+> - propagation across hubs
+
 ## Contributing
 
 If you find this project interesting and want to contribute, please feel free to submit Pull Requests with suggested improvements.
