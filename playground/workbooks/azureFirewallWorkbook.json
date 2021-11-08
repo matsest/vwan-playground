@@ -11,11 +11,11 @@
       "workbookType": {
         "type": "string",
         "allowedValues": [
-            "workbook",
-            "sentinel"
-            
-          ],
-          "defaultValue": "workbook",
+          "workbook",
+          "sentinel"
+
+        ],
+        "defaultValue": "workbook",
         "metadata": {
           "description": "The gallery that the workbook will been shown under. Supported values include workbook, tsg, etc. Usually, this is 'workbook'"
         }
@@ -43,7 +43,7 @@
       },
       "workbookId": {
         "type": "string",
-        "defaultValue": "[newGuid()]",
+        "defaultValue": "[guid(resourceGroup().id, parameters('workbookDisplayName'))]",
         "metadata": {
           "description": "The unique guid for this workbook instance"
         }
