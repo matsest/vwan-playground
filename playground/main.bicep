@@ -105,8 +105,7 @@ module firewallPolicies 'modules/firewallPolicies.bicep' = [for (region, i) in v
   scope: vwanRg
   name: 'firewallPolicies-${region.location}-deploy'
   params: {
-    parentPolicyName: '${namePrefix}-${region.location}-parent-azfwp'
-    childPolicyName: '${namePrefix}-${region.location}-child-azfwp'
+    policyName: '${namePrefix}-${region.location}-azfwp'
     location: region.location
   }
 }]
@@ -119,7 +118,7 @@ module azureFirewalls 'modules/azureFirewalls.bicep' = [for (region, i) in vwanC
     name: '${vwan.outputs.name}-${region.location}-vhub-azfw'
     hubId: virtualHubs[i].outputs.resourceId
     location: region.location
-    fwPolicyId: region.deployFw ? firewallPolicies[i].outputs.childResourceId : ''
+    fwPolicyId: region.deployFw ? firewallPolicies[i].outputs.policyResourceId: ''
     publicIPsCount: 1
     workspaceId: workspace.outputs.resourceId
   }
