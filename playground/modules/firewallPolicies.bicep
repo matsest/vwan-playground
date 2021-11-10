@@ -24,3 +24,8 @@ resource policy 'Microsoft.Network/firewallPolicies@2021-03-01' = {
 
 output policyName string = policy.name
 output policyResourceId string = policy.id
+
+// TODO: Allow some traffic as default rule?
+// - Allow regional traffic
+// - Allow traffic to/from branches to landing zones
+// - Deny internet traffic?
