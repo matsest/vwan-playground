@@ -220,7 +220,7 @@ module lzRouteTable 'modules/hubRouteTables.bicep' = [for (region, i) in vwanCon
     ]
     routes: region.deployFw ? [
       {
-        name: 'public_traffic' // this name is not takend into consideration when not using defaultroutetable
+        name: 'all_traffic'
         destinationType: 'CIDR'
         destinations: [
           '0.0.0.0/0'
@@ -249,9 +249,7 @@ module lzVNetConnection 'modules/hubVirtualNetworkConnections.bicep' = [for (reg
   name: '${region.landingZone.name}-vnet-conn-deploy'
   params: {
     hubName: '${vwan.outputs.name}-${region.location}-vhub'
-    associatedRouteTableId: lzRouteTable[i].outputs.resourceId
-    // associatedRouteTableId: region.deployFw ? lzRouteTable[i].outputs.resourceId : builtInRouteTables[i].outputs.defaultRouteTableResourceId
-    // dicuss - routing scenario w/wo fw
+    associatedRouteTableId: region.deployFw ? lzRouteTable[i].outputs.resourceId : builtInRouteTables[i].outputs.defaultRouteTableResourceId
     propagatedRouteTableIds: region.deployFw ? [
       builtInRouteTables[i].outputs.noneRouteTableResourceId // do we want lz-lz traffic to be routed via firewall?
     ] : [
@@ -259,7 +257,6 @@ module lzVNetConnection 'modules/hubVirtualNetworkConnections.bicep' = [for (reg
     ]
     vnetId: landingZoneVnet[i].outputs.resourceId
     connectionName: 'peeredTo-${region.landingZone.name}-vnet'
-    // lables?
   }
 }]
 
