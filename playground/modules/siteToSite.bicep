@@ -37,6 +37,7 @@ resource s2sconnection 'Microsoft.Network/connections@2021-03-01' = [for (hub, i
     sharedKey: psk
     localNetworkGateway2: {
       id: lgw[i].id
+      properties: any(null)
     }
   }
 }]
