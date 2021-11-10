@@ -70,6 +70,16 @@ The Azure Virtual WAN Playground deploys the following topology:
 > - VNET to VNET
 > - propagation across hubs
 
+## Test cases / functionality
+
+> TODO: Describe how the playground can be used?
+>
+> - X-Y traffic
+> - Internet break out
+> - Filter X-Z traffic
+> - Site-to-X traffic
+> - Bastion
+
 ## Contributing
 
 If you find this project interesting and want to contribute, please feel free to submit Pull Requests with suggested improvements.
