@@ -11,17 +11,17 @@ param hubid string
 param scaleUnits int = 1
 
 resource hubvpngw 'Microsoft.Network/vpnGateways@2021-03-01' = {
-    name: hubvpngwname
-    location: location
-    properties: {
-        virtualHub: {
-            id: hubid
-        }
-        bgpSettings: {
-            asn: 65515
-        }
-        vpnGatewayScaleUnit: scaleUnits
+  name: hubvpngwname
+  location: location
+  properties: {
+    virtualHub: {
+      id: hubid
     }
+    bgpSettings: {
+      asn: 65515
+    }
+    vpnGatewayScaleUnit: scaleUnits
+  }
 }
 
 output id string = hubvpngw.id
