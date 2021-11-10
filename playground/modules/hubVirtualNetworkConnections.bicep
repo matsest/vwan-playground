@@ -12,7 +12,7 @@ resource vHub 'Microsoft.Network/virtualHubs@2021-03-01' existing = {
   name: hubName
 }
 
-resource connection 'Microsoft.Network/virtualHubs/hubVirtualNetworkConnections@2021-05-01' = {
+resource connection 'Microsoft.Network/virtualHubs/hubVirtualNetworkConnections@2021-03-01' = {
   name: connectionName
   parent: vHub
   properties: {
@@ -28,7 +28,6 @@ resource connection 'Microsoft.Network/virtualHubs/hubVirtualNetworkConnections@
       }
       propagatedRouteTables: {
         ids: propagatedRouteTableIds == [] ? json('null') : routeTableIds
-        // labels // do we want the vnet connections to propagate to others?
       }
     }
   }
