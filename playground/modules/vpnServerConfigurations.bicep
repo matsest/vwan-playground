@@ -7,6 +7,8 @@ param tenantId string
 param clientId string
 param location string = resourceGroup().location
 
+param tags object = {}
+
 var aadAuthenticationParameters = {
   aadTenant: '${environment().authentication.loginEndpoint}${tenantId}/'
   aadAudience: clientId
@@ -16,6 +18,7 @@ var aadAuthenticationParameters = {
 resource vpnServerConfigurations 'Microsoft.Network/vpnServerConfigurations@2021-03-01' = {
   name: vpnConfigName
   location: location
+  tags: tags
   properties: {
     vpnProtocols: [
       'OpenVPN'

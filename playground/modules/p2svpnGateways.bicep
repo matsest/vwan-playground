@@ -8,10 +8,12 @@ param enableInternetSecurity bool = true
 param vpnGatewayScaleUnit int = 1
 param customDnsServers array = []
 param isRoutingPreferenceInternet bool = false
+param tags object = {}
 
 resource p2sVpnGw 'Microsoft.Network/p2svpnGateways@2021-03-01' = {
   name: p2sVpnGwName
   location: location
+  tags: tags
   properties: {
     virtualHub: {
       id: virtualHubId

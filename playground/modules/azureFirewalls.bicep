@@ -5,6 +5,7 @@ param publicIPsCount int = 1
 param publicIPAddresses array = []
 param workspaceId string
 param location string = resourceGroup().location
+param tags object = {}
 
 var adresses = [for address in publicIPAddresses: {
   address: address
@@ -13,6 +14,7 @@ var adresses = [for address in publicIPAddresses: {
 resource firewall 'Microsoft.Network/azureFirewalls@2021-03-01' = {
   name: name
   location: location
+  tags: tags
   properties: {
     sku: {
       name: 'AZFW_Hub'

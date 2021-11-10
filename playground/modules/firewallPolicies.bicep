@@ -9,6 +9,7 @@ param policyName string
 param threatIntelMode string = 'Deny'
 param dnsServers array = []
 param enableProxy bool = true
+param tags object = {}
 
 resource policy 'Microsoft.Network/firewallPolicies@2021-03-01' = {
   name: policyName
@@ -20,6 +21,7 @@ resource policy 'Microsoft.Network/firewallPolicies@2021-03-01' = {
       enableProxy: enableProxy
     }
   }
+  tags: tags
 }
 
 output policyName string = policy.name

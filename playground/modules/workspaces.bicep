@@ -1,12 +1,13 @@
-
 param namePrefix string
-param location string
+param location string = resourceGroup().location
+param tags object = {}
 
 var name = '${take('${namePrefix}-${uniqueString(resourceGroup().id)}',20)}-log'
 
 resource workspaces 'Microsoft.OperationalInsights/workspaces@2021-06-01' = {
   name: name
   location: location
+  tags: tags
   properties: {
     sku: {
       name: 'PerGB2018'

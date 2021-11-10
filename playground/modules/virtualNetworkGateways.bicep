@@ -1,10 +1,12 @@
 param location string = resourceGroup().location
 param vpnGwName string
 param subnetId string
+param tags object = {}
 
 resource publicIp 'Microsoft.Network/publicIPAddresses@2021-03-01' = {
   name: '${vpnGwName}-pip'
   location: location
+  tags: tags
   sku: {
     name: 'Standard'
     tier: 'Regional'

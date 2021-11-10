@@ -8,6 +8,8 @@ param adminPassword string
 param windowsOsVersion string = '2019-Datacenter'
 param vmSize string = 'Standard_D2_v3'
 
+param tags object = {}
+
 var storageName = 'vmlogs${uniqueString(resourceGroup().id)}'
 
 resource stg 'Microsoft.Storage/storageAccounts@2021-04-01' = {
@@ -17,11 +19,13 @@ resource stg 'Microsoft.Storage/storageAccounts@2021-04-01' = {
     name: 'Standard_LRS'
   }
   kind: 'Storage'
+  tags: tags
 }
 
 resource nic 'Microsoft.Network/networkInterfaces@2021-03-01' = {
   name: '${vmName}-nic'
   location: location
+  tags: tags
 
   properties: {
     ipConfigurations: [
@@ -41,6 +45,7 @@ resource nic 'Microsoft.Network/networkInterfaces@2021-03-01' = {
 resource vm 'Microsoft.Compute/virtualMachines@2019-12-01' = {
   name: vmName
   location: location
+  tags: tags
   properties: {
     hardwareProfile: {
       vmSize: vmSize

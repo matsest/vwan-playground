@@ -13,9 +13,12 @@ param vpnDeviceIpAddress string
 param wanId string
 param location string = resourceGroup().location
 
+param tags object = {}
+
 resource vpnSite 'Microsoft.Network/vpnSites@2021-03-01' = {
   name: siteName
   location: location
+  tags: tags
   properties: {
     addressSpace: {
       addressPrefixes: [

@@ -1,6 +1,7 @@
 param name string
 param subnetId string
 param location string = resourceGroup().location
+param tags object = {}
 
 resource bastionip 'Microsoft.Network/publicIPAddresses@2021-03-01' = {
   name: '${name}-pip'
@@ -11,6 +12,7 @@ resource bastionip 'Microsoft.Network/publicIPAddresses@2021-03-01' = {
   properties: {
     publicIPAllocationMethod: 'Static'
   }
+  tags: tags
 }
 
 resource bastion 'Microsoft.Network/bastionHosts@2021-03-01' = {
@@ -31,4 +33,5 @@ resource bastion 'Microsoft.Network/bastionHosts@2021-03-01' = {
       }
     ]
   }
+  tags: tags
 }

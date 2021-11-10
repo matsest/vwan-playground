@@ -1,6 +1,7 @@
 param site object
 param vpnGwId string
 param hubs array
+param tags object = {}
 
 @secure()
 param psk string
@@ -9,6 +10,7 @@ param location string = resourceGroup().location
 resource lgw 'Microsoft.Network/localNetworkGateways@2021-03-01' = [for hub in hubs: if (hub.vpnGw != null) {
   name: '${site.location}-${hub.hubName}'
   location: location
+  tags: tags
   properties: {
     localNetworkAddressSpace: {
       addressPrefixes: hub.hubAddressPrefix
@@ -24,6 +26,7 @@ resource lgw 'Microsoft.Network/localNetworkGateways@2021-03-01' = [for hub in h
 resource s2sconnection 'Microsoft.Network/connections@2021-03-01' = [for (hub, i) in hubs: if (hub.vpnGw != null) {
   name: '${site.location}-to-${hub.hubName}-con'
   location: location
+  tags: tags
   properties: {
     connectionType: 'IPsec'
     connectionProtocol: 'IKEv2'

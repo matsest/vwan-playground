@@ -10,9 +10,12 @@ param hubid string
 @description('1 scaleunit corresponds to 500 Mbps')
 param scaleUnits int = 1
 
+param tags object = {}
+
 resource hubvpngw 'Microsoft.Network/vpnGateways@2021-03-01' = {
   name: hubvpngwname
   location: location
+  tags: tags
   properties: {
     virtualHub: {
       id: hubid

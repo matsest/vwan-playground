@@ -1,6 +1,7 @@
 param privateDnsZoneName string
 param vNetName string
 param vNetId string
+param tags object = {}
 
 resource privateDnsZone 'Microsoft.Network/privateDnsZones@2020-06-01' existing = {
   name: privateDnsZoneName
@@ -16,4 +17,5 @@ resource vnetLink 'Microsoft.Network/privateDnsZones/virtualNetworkLinks@2020-06
       id: vNetId
     }
   }
+  tags: tags
 }

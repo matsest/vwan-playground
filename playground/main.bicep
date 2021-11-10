@@ -40,6 +40,7 @@ module workspace 'modules/workspaces.bicep' = {
   params: {
     location: location
     namePrefix: namePrefix
+    tags: tags
   }
 }
 
@@ -49,6 +50,7 @@ module privateDnsZone 'modules/privateDnsZones.bicep' = {
   name: 'private-dns-deploy'
   params: {
     namePrefix: namePrefix
+    tags: tags
   }
 }
 
@@ -63,6 +65,7 @@ module bastionVnet 'modules/virtualNetworks.bicep' = {
     vnetName: '${namePrefix}-sharedservices-${vwanConfig.defaultLocation}-vnet'
     deployBastionSubnet: true
     deployGatewaySubnet: false
+    tags: tags
   }
 }
 
@@ -73,6 +76,7 @@ module bastion 'modules/bastionHosts.bicep' = {
   params: {
     name: '${namePrefix}-shared-bastion'
     subnetId: bastionVnet.outputs.bastionSubnetId
+    tags: tags
   }
 }
 
@@ -91,6 +95,7 @@ module vwan 'modules/virtualWans.bicep' = {
   params: {
     name: vwanName
     location: location
+    tags: tags
   }
 }
 
@@ -103,6 +108,7 @@ module virtualHubs 'modules/virtualHubs.bicep' = [for region in vwanConfig.regio
     addressPrefix: region.hubAddressPrefix
     location: region.location
     virtualWanId: vwan.outputs.resourceId
+    tags: tags
   }
 }]
 
@@ -113,6 +119,7 @@ module firewallPolicies 'modules/firewallPolicies.bicep' = [for (region, i) in v
   params: {
     policyName: '${namePrefix}-${region.location}-azfwp'
     location: region.location
+    tags: tags
   }
 }]
 
@@ -127,6 +134,7 @@ module azureFirewalls 'modules/azureFirewalls.bicep' = [for (region, i) in vwanC
     fwPolicyId: region.deployFw ? firewallPolicies[i].outputs.policyResourceId: ''
     publicIPsCount: 1
     workspaceId: workspace.outputs.resourceId
+    tags: tags
   }
 }]
 
@@ -138,6 +146,7 @@ module vpnGateways 'modules/vpnGateways.bicep' = [for (region, i) in vwanConfig.
     hubid: virtualHubs[i].outputs.resourceId
     hubvpngwname: '${virtualHubs[i].outputs.resourceName}-vpng'
     location: region.location
+    tags: tags
   }
 }]
 
@@ -152,6 +161,7 @@ module erGateways 'modules/expressRouteGateways.bicep' = [for (region, i) in vwa
     virtualHubId: virtualHubs[i].outputs.resourceId
     gwName: '${virtualHubs[i].outputs.resourceName}-erg'
     location: region.location
+    tags: tags
   }
 }]
 
@@ -163,6 +173,7 @@ module vpnServerConfigurations 'modules/vpnServerConfigurations.bicep' = if (!em
     vpnConfigName: '${namePrefix}-aad-uservpn-conf'
     tenantId: tenantId
     clientId: clientId
+    tags: tags
   }
 }
 
@@ -179,6 +190,7 @@ module p2svpnGateways 'modules/p2svpnGateways.bicep' = [for (region, i) in vwanC
     vpnServerConfigurationId: (!empty(clientId) && !empty(tenantId)) ? vpnServerConfigurations.outputs.resourceId :''
     p2sVpnGwName: '${virtualHubs[i].outputs.resourceName}-p2sgw'
     addressPrefixes: region.p2sConfig.p2sAddressPrefixes
+    tags: tags
   }
 }]
 
@@ -202,6 +214,7 @@ module landingZoneVnet 'modules/virtualNetworks.bicep' = [for (region, i) in vwa
     sharedServicesRg: sharedg.name
     peerId: bastionVnet.outputs.resourceId
     peerName: bastionVnet.outputs.vnetName
+    tags: tags
   }
 }]
 
@@ -213,6 +226,7 @@ module landingZoneServer 'modules/windowsVM.bicep' = [for (region, i) in vwanCon
     vmName: '${region.landingZone.name}-vm'
     adminPassword: vmAdminPassword
     subnetId: landingZoneVnet[i].outputs.serverSubnetId
+    tags: tags
   }
 }]
 
@@ -267,7 +281,6 @@ module lzVNetConnection 'modules/hubVirtualNetworkConnections.bicep' = [for (reg
   }
 }]
 
-// On-Prem
 // Deploy "on-prem" resource groups
 resource onPremRG 'Microsoft.Resources/resourceGroups@2021-04-01' = [for (site, i) in vwanConfig.onPremSites: {
   name: '${namePrefix}-site-${site.location}-rg'
@@ -287,6 +300,7 @@ module onPremVnet 'modules/virtualNetworks.bicep' = [for (site, i) in vwanConfig
     sharedServicesRg: sharedg.name
     peerId: bastionVnet.outputs.resourceId
     peerName: bastionVnet.outputs.vnetName
+    tags: tags
   }
 }]
 
@@ -298,6 +312,7 @@ module onPremServer 'modules/windowsVM.bicep' = [for (site, i) in vwanConfig.onP
     vmName: '${site.location}01'
     adminPassword: vmAdminPassword
     subnetId: onPremVnet[i].outputs.serverSubnetId
+    tags: tags
   }
 }]
 
@@ -308,6 +323,7 @@ module onPremVPNGw 'modules/virtualNetworkGateways.bicep' = [for (site, i) in vw
   params: {
     vpnGwName: '${onPremVnet[i].outputs.vnetName}-vgw'
     subnetId: onPremVnet[i].outputs.gwSubnetId
+    tags: tags
   }
 }]
 
@@ -321,6 +337,7 @@ module vpnSites 'modules/vpnSites.bicep' = [for (site, i) in vwanConfig.onPremSi
     bgpPeeringAddress: onPremVPNGw[i].outputs.bgpAddress
     vpnDeviceIpAddress: onPremVPNGw[i].outputs.publicIp
     wanId: vwan.outputs.resourceId
+    tags: tags
   }
 }]
 
@@ -365,5 +382,6 @@ module siteToSite 'modules/siteToSite.bicep' = [for (site, i) in vwanConfig.onPr
     hubs: vpnGws.outputs.hubs
     vpnGwId: onPremVPNGw[i].outputs.resourceId
     psk: psk
+    tags: tags
   }
 }]
