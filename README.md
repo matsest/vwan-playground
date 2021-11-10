@@ -64,21 +64,25 @@ To delete all resources, see the description [here](./cleanup/README.md).
 
 The Azure Virtual WAN Playground deploys the following topology:
 
-> TODO: Describe routing scenario:
+> TODO: Insert updated topology
+
+> TODO: Describe routing scenario and 'default' behaviour
 >
 > - Branch-to-branch: (default)
 > - VNET to VNET
 > - propagation across hubs
 
-## Test cases / functionality
+## Usage
 
-> TODO: Describe how the playground can be used?
+> TODO: Describe how the playground can be used
 >
 > - X-Y traffic
 > - Internet break out
+> - Firewall rules
 > - Filter X-Z traffic
 > - Site-to-X traffic
-> - Bastion
+> - P2S: download client and test
+> - Bastion / lz's
 
 ## Contributing
 
