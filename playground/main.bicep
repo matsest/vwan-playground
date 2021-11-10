@@ -8,6 +8,10 @@ param vmAdminPassword string
 @secure()
 param psk string
 
+param tags object = {
+  Application: 'vwan-playground'
+}
+
 // Load VWAN Playground Config file.
 var vwanConfig = json(loadTextContent('./configs/contoso.json'))
 var location = vwanConfig.defaultLocation
@@ -26,6 +30,7 @@ var vwanName = '${namePrefix}-vwan'
 resource sharedg 'Microsoft.Resources/resourceGroups@2021-04-01' = {
   name: '${namePrefix}-sharedservices-rg'
   location: location
+  tags: tags
 }
 
 // Log Analytics Workspace
@@ -76,6 +81,7 @@ module bastion 'modules/bastionHosts.bicep' = {
 resource vwanRg 'Microsoft.Resources/resourceGroups@2021-04-01' = {
   name: '${namePrefix}-vwan-rg'
   location: location
+  tags: tags
 }
 
 // Deploy Virtual VWAN
@@ -181,6 +187,7 @@ module p2svpnGateways 'modules/p2svpnGateways.bicep' = [for (region, i) in vwanC
 resource landingZoneRg 'Microsoft.Resources/resourceGroups@2021-04-01' = [for (region, i) in vwanConfig.regions: {
   name: '${namePrefix}-${region.landingZone.name}-rg'
   location: region.location
+  tags: tags
 }]
 
 // Deploy "landing zone" VNets
@@ -265,6 +272,7 @@ module lzVNetConnection 'modules/hubVirtualNetworkConnections.bicep' = [for (reg
 resource onPremRG 'Microsoft.Resources/resourceGroups@2021-04-01' = [for (site, i) in vwanConfig.onPremSites: {
   name: '${namePrefix}-site-${site.location}-rg'
   location: site.location
+  tags: tags
 }]
 
 // Deploy "on-prem" VNets
